@@ -1,5 +1,5 @@
 use std::error::Error;
-use wgpu::CompositeAlphaMode;
+use wgpu::{CompositeAlphaMode, InstanceDescriptor};
 use wgpu_glyph::{ab_glyph, GlyphBrushBuilder, Region, Section, Text};
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -13,8 +13,8 @@ fn main() -> Result<(), Box<dyn Error>> {
         .build(&event_loop)
         .unwrap();
 
-    let instance = wgpu::Instance::new(wgpu::Backends::all());
-    let surface = unsafe { instance.create_surface(&window) };
+    let instance = wgpu::Instance::new(InstanceDescriptor::default());
+    let surface = unsafe { instance.create_surface(&window) }.unwrap();
 
     // Initialize GPU
     let (device, queue) = futures::executor::block_on(async {
@@ -48,7 +48,8 @@ fn main() -> Result<(), Box<dyn Error>> {
             width: size.width,
             height: size.height,
             present_mode: wgpu::PresentMode::AutoVsync,
-            alpha_mode: CompositeAlphaMode::Auto
+            alpha_mode: CompositeAlphaMode::Auto,
+            view_formats: vec![],
         },
     );
 
@@ -83,7 +84,8 @@ fn main() -> Result<(), Box<dyn Error>> {
                         width: size.width,
                         height: size.height,
                         present_mode: wgpu::PresentMode::AutoVsync,
-                        alpha_mode: CompositeAlphaMode::Auto
+                        alpha_mode: CompositeAlphaMode::Auto,
+                        view_formats: vec![],
                     },
                 );
             }
