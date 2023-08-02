@@ -12,8 +12,8 @@ readme = "README.md"
 resolver = "2"
 
 [dependencies]
-wgpu = "0.16"
-glyph_brush = "0.7"
+wgpu = "0.17"
+glyph_brush = "0.7" # FIXME: switch to fontdue
 log = "0.4"
 
 [dependencies.bytemuck]
